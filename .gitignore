@@ -9,4 +9,5 @@ build
 *.DS_Store
 *.eggs
 *venv
+*vscode
 src/stream-manager/
