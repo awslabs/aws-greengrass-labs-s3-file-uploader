@@ -1,0 +1,25 @@
+---
+RecipeFormatVersion: "2020-01-25"
+ComponentName: "{COMPONENT_NAME}"
+ComponentVersion: "{COMPONENT_VERSION}"
+ComponentDescription: "This is simple file uploader component written in Python."
+ComponentPublisher: "{COMPONENT_AUTHOR}"
+ComponentDependencies:
+  aws.greengrass.StreamManager:
+    VersionRequirement: "^2.0.0"
+    DependencyType: "HARD"
+ComponentConfiguration:
+  DefaultConfiguration:
+    PathName: "<PLACEHOLDER PATH HERE>"
+    BucketName: "<PLACEHOLDER BUCKET HERE>"
+    Interval: "1"
+    LogLevel: "INFO"
+Manifests:
+  - Platform:
+      os: linux
+    Artifacts:
+      - URI: "s3://BUCKET_NAME/COMPONENT_NAME/COMPONENT_VERSION/aws-greengrass-labs-s3-file-uploader.zip"
+        Unarchive: ZIP
+    Lifecycle:
+      Run: "python3 -u {artifacts:decompressedPath}/aws-greengrass-labs-s3-file-uploader/main.py \"{configuration:/PathName}\" \"{configuration:/BucketName}\" \"{configuration:/Interval}\" \"{configuration:/LogLevel}\""
+      Install: "pip3 install --user -r {artifacts:decompressedPath}/aws-greengrass-labs-s3-file-uploader/requirements.txt"

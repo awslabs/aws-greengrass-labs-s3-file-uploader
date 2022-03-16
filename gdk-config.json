@@ -1,0 +1,16 @@
+{
+  "component": {
+    "aws.greengrass.labs.s3.file.uploader": {
+      "author": "Amazon",
+      "version": "NEXT_PATCH",
+      "build": {
+        "build_system": "zip"
+      },
+      "publish": {
+        "bucket": "<PLACEHOLDER BUCKET HERE>",
+        "region": "<PLACEHOLDER REGION>"
+      }
+    }
+  },
+  "gdk_version": "1.0.0"
+}
