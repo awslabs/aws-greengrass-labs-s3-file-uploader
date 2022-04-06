@@ -76,6 +76,24 @@ GreengrassV2TokenExchangeRole has access to the bucket listed in the configurati
 
 You need to make sure that the local ggc_user has access to PathName.
 
+## Testing
+Deploy the component with the following configuration:
+```
+PathName: "/home/gcc_user/upload/*.txt"
+BucketName: <put-you-bucket-name-here>
+Interval: 10
+```
+Log into the component and create a text file in the /home/gcc_user/upload folder: 
+```
+echo test1.txt > /home/gcc_user/upload
+```
+Create another test file:
+```
+echo test2.txt > /home/gcc_user/upload
+```
+
+Check that test1.txt has been uploaded to S3 bucket, you mayhave to wait 10s.
+
 ## Local log file
 This component uses the following local log file:
 ```
