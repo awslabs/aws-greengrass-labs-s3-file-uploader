@@ -47,9 +47,10 @@ class DirectoryUploader:
     __stream_name = "DirectoryUploader"
     __status_stream_name = "DirectoryUploaderStatus"
     
-    def __init__(self, pathname, bucket_name, interval, logger:logging.Logger ,client:StreamManagerClient=None):
+    def __init__(self, pathname, bucket_name, bucket_path, interval, logger:logging.Logger ,client:StreamManagerClient=None):
         self.__pathname = pathname
         self.__bucket_name = bucket_name
+        self.__bucket_path = bucket_path
         self.__stream_name = bucket_name + "Stream"
         self.__status_stream_name = self.__stream_name + "Status"
         self.__client = client
@@ -124,11 +125,19 @@ class DirectoryUploader:
                         self.__logger.info('No new files to transfer')
                     
                     for file in fileset:
+
                         # Append a S3 Task definition and print the sequence number
                         head, tail = ntpath.split(file)
+                        # Create folder structure in the cloud
+                        key = self.__bucket_path+"/"+tail
+                        
+                        # Print for logging
+                        print("TAIL VALUE: " + tail)
+                        print("FINAL KEY VALUE: " + key)
+                        
                         s3_export_task_definition = S3ExportTaskDefinition(input_url="file://"+file,
                                                                         bucket=self.__bucket_name,
-                                                                        key=tail)
+                                                                        key=key)
                         payload = None
                         try:
                             payload = Util.validate_and_serialize_to_json_bytes(s3_export_task_definition)
