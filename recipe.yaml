@@ -12,6 +12,7 @@ ComponentConfiguration:
   DefaultConfiguration:
     PathName: "<PLACEHOLDER PATH HERE>"
     BucketName: "<PLACEHOLDER BUCKET HERE>"
+    ObjectKeyPrefix: "<PLACEHOLDER OBJECT PREFIX HERE>"
     Interval: "1"
     LogLevel: "INFO"
 Manifests:
@@ -21,5 +22,5 @@ Manifests:
       - URI: "s3://BUCKET_NAME/COMPONENT_NAME/COMPONENT_VERSION/aws-greengrass-labs-s3-file-uploader.zip"
         Unarchive: ZIP
     Lifecycle:
-      Run: "python3 -u {artifacts:decompressedPath}/aws-greengrass-labs-s3-file-uploader/main.py \"{configuration:/PathName}\" \"{configuration:/BucketName}\" \"{configuration:/Interval}\" \"{configuration:/LogLevel}\""
+      Run: "python3 -u {artifacts:decompressedPath}/aws-greengrass-labs-s3-file-uploader/main.py \"{configuration:/PathName}\" \"{configuration:/BucketName}\" \"{configuration:/ObjectKeyPrefix}\" \"{configuration:/Interval}\" \"{configuration:/LogLevel}\""
       Install: "pip3 install --user -r {artifacts:decompressedPath}/aws-greengrass-labs-s3-file-uploader/requirements.txt"

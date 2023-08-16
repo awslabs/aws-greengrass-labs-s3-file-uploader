@@ -50,7 +50,7 @@ class DirectoryUploader:
     def __init__(self, pathname, bucket_name, bucket_path, interval, logger:logging.Logger ,client:StreamManagerClient=None):
         self.__pathname = pathname
         self.__bucket_name = bucket_name
-        self.__bucket_path = bucket_path
+        self.__bucket_path = bucket_path.removeprefix("/").removesuffix("/")
         self.__stream_name = bucket_name + "Stream"
         self.__status_stream_name = self.__stream_name + "Status"
         self.__client = client
@@ -128,12 +128,13 @@ class DirectoryUploader:
 
                         # Append a S3 Task definition and print the sequence number
                         head, tail = ntpath.split(file)
+                        
                         # Create folder structure in the cloud
                         key = self.__bucket_path+"/"+tail
                         
                         # Print for logging
-                        print("TAIL VALUE: " + tail)
-                        print("FINAL KEY VALUE: " + key)
+                        self.__logger.debug("TAIL VALUE: " + tail)
+                        self.__logger.debug("FINAL KEY VALUE: " + key)
                         
                         s3_export_task_definition = S3ExportTaskDefinition(input_url="file://"+file,
                                                                         bucket=self.__bucket_name,

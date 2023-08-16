@@ -62,6 +62,7 @@ This component provides the following configuration parameters when it is deploy
 
     PathName: "/local/path/to/monitor/*.ext"
     BucketName: "bucket-name-where-to-upload-files"
+    ObjectKeyPrefix: "a prefix to add to the object name in S3"
     Interval: <time in second between the scans>
 
 PathName is a path with pattern expansion as described [here](https://docs.python.org/3/library/glob.html). Some valid examples are:
@@ -70,6 +71,8 @@ PathName is a path with pattern expansion as described [here](https://docs.pytho
 /user/ggc_user/logs/*.log
 
 ``` 
+
+ObjectKeyPrefix allows you to put the files in a subfolder in the S3 bucket. The object name will be : s3://BucketName/ObjectKeyPrefix/orginalfilename
 
 You need to make sure that the role   
 GreengrassV2TokenExchangeRole has access to the bucket listed in the configuration.
