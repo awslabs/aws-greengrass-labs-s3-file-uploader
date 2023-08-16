@@ -27,14 +27,14 @@ from src.DirectoryUploader import DirectoryUploader
 # The program monitor the completion of the S3 operation and upon succefull 
 
 
-async def main(logger:logging.Logger, pathname,bucket_name,interval):
+async def main(logger:logging.Logger, pathname,bucket_name,bucket_path,interval):
 
     logger.info("==== main ====")
     
     while True:
         du = None
         try:
-            du = DirectoryUploader(pathname=pathname,bucket_name=bucket_name,interval=interval,logger=logger)
+            du = DirectoryUploader(pathname=pathname,bucket_name=bucket_name,bucket_path=bucket_path,interval=interval,logger=logger)
             await du.Run()
         except Exception:
             logger.exception("Exception while running")
@@ -50,21 +50,25 @@ async def main(logger:logging.Logger, pathname,bucket_name,interval):
 
 if __name__ == "__main__":
     #args :  pathname, bucket_name, interval, log_level
-    if len(sys.argv) == 5:
+    if len(sys.argv) == 6:
         #Todo: validate arguments.
+        
+        print("PRINTING INCOMING ARGUMENTS")
+        print(sys.argv)
         pathname = sys.argv[1]
         bucket_name = sys.argv[2]
-        interval = sys.argv[3]
-        log_level = sys.argv[4]
+        bucket_path = sys.argv[3]
+        interval = sys.argv[4]
+        log_level = sys.argv[5]
 
         logging.basicConfig(level=log_level)
         logger=logging.getLogger()
 
-        logger.info(f'File uploader started with; pathname={pathname}, bucket_name={bucket_name}, interval={interval}')
-        asyncio.run(main(logger,pathname,bucket_name,int(interval)))
+        logger.info(f'File uploader started with; pathname={pathname}, bucket_name={bucket_name}, bucket_path={bucket_path}, interval={interval}')
+        asyncio.run(main(logger,pathname,bucket_name,bucket_path,int(interval)))
     else:
         logging.basicConfig(level=logging.INFO)
         logger=logging.getLogger()
-        logger.error(f'3 argument required, only {len(sys.argv)} provided.')
+        logger.error(f'6 argument required, only {len(sys.argv)} provided.')
 
 
