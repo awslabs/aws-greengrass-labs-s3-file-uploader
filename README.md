@@ -86,7 +86,7 @@ PathName: "/home/gcc_user/upload/*.txt"
 BucketName: <put-you-bucket-name-here>
 Interval: 10
 ```
-Log into the component and create a text file in the /home/gcc_user/upload folder: 
+Log into the device and create a text file in the /home/gcc_user/upload folder: 
 ```
 echo test1.txt > /home/gcc_user/upload
 ```
