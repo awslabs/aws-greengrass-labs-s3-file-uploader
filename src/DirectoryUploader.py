@@ -57,7 +57,7 @@ class DirectoryUploader:
         if(self.__client == None):
             self.__client = StreamManagerClient() 
         self.__logger = logger
-        self.__status_interval = min(interval,1)
+        self.__status_interval = max(interval,1)
         self.__filesProcessed = set()
         self.__interval=interval
 
