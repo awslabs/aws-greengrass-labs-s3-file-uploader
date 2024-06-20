@@ -42,7 +42,7 @@ class TestDirectoryUploader(unittest.TestCase):
         append_mock.return_value = 123
         mock_client.append_message = append_mock
         
-        du = DirectoryUploader(tmpdir+"/*.csv","test-bucket",1,logger=logger,client=mock_client)
+        du = DirectoryUploader(tmpdir+"/*.csv","test-bucket","",1,logger=logger,client=mock_client)
         loop = asyncio.get_event_loop()
         loop.run_until_complete(du._DirectoryUploader__scan(under_test=True)) 
         mock_client.assert_not_called()
@@ -82,7 +82,7 @@ class TestDirectoryUploader(unittest.TestCase):
         read_messages_mock.return_value = message_list
         mock_client.read_messages = read_messages_mock
 
-        du = DirectoryUploader(tmpdir+"/*.csv","test-bucket",1,logger=logger,client=mock_client)
+        du = DirectoryUploader(tmpdir+"/*.csv","test-bucket","",1,logger=logger,client=mock_client)
         loop = asyncio.get_event_loop()
         
         loop.run_until_complete(du._DirectoryUploader__processStatus(under_test=True))
@@ -108,7 +108,7 @@ class TestDirectoryUploader(unittest.TestCase):
         mock_error = unittest.mock.MagicMock()
         mock_logger.error = mock_error
         
-        du = DirectoryUploader(fakedir,"test-bucket",1,logger=mock_logger,client=mock_client)
+        du = DirectoryUploader(fakedir,"test-bucket","",1,logger=mock_logger,client=mock_client)
         loop = asyncio.get_event_loop()
         loop.run_until_complete(du._DirectoryUploader__scan(under_test=True)) 
         mock_client.assert_not_called()
@@ -134,7 +134,7 @@ class TestDirectoryUploader(unittest.TestCase):
         mock_error = unittest.mock.MagicMock()
         mock_logger.error = mock_error
 
-        du = DirectoryUploader(tmpdir+"/test*/test1.csv","test-bucket",1,logger=mock_logger,client=mock_client)
+        du = DirectoryUploader(tmpdir+"/test*/test1.csv","test-bucket","",1,logger=mock_logger,client=mock_client)
         loop = asyncio.get_event_loop()
         loop.run_until_complete(du._DirectoryUploader__scan(under_test=True)) 
         mock_client.assert_not_called()
